@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype / 統合デザイン学科卒業・修了制作展2026 / web図録</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+
+<!---->
+
+<div class="app-container">
+
+
+  <main class="main-window">
+    <div class="content-wrapper">
+
+      <section class="filter-tags"></section>
+
+      <section class="web-title">
+        <a class="title" href="index.html">統合デザイン学科卒業・修了制作展<br>web図録</a> <!--あとでリンク入れるか？　今の様子では、プロジェクト名に変化-->
+        <div class="professor-name"></div>
+        <div class="titletext">本サイトでは、2026年度多摩美術大学統合デザイン学科卒業・修了制作展で展示された作品・研究の写真・映像・コンセプトをいつでもご覧いただけます。</div>
+        <!--↑ここもプロジェクト説明文に変化-->
+      </section>
+
+      <div id="work-list" class="work-grid"></div>
+
+      <div style="height: 400px;"></div> <!--（スクロール確認用のダミー余白）-->
+    </div>
+  </main>
+
+
+
+
+
+<nav class="side-bar" id="side-bar">
+    <div class="fixed-labels">
+      <div class="bar-icon"  id="menu-icon-toggle"><span>≡</span></div>
+      <div class="bar-mid"><span class="vertical-text">web図録</span></div>
+      <div class="bar-low"><span class="vertical-text">統合卒展26</span></div>
+    </div>
+
+
+<!--左揃えしたいグループを一塊=wrapperにしていき、その中で左揃えにする-->
+  <div class="menu-content" id="menu-content">
+      <div class="menu-links-wrapper">
+        <div class="menu-links">
+          <div><a href="index.html" class="linktoTop">web図録トップ</a></div>
+          <div><a class="linktoCredit">クレジット</a></div>
+          <div><a href="https://integrated.jp/gw26/" class="linktoExhibitionsite">当日のサイト</a></div>
+          <div class="sns-links">
+            <span><a href="https://www.instagram.com/integrated_gw">Instagram</a></span>
+            <span><a href="https://x.com/integrated_gw">X</a></span>
+          </div>
+        </div>
+      </div>
+
+    <div class="exhibition-title">
+      <div class="title-jp">
+        多摩美術大学<br>
+        統合デザイン学科<br>
+        卒業・修了制作展 2026
+      </div>
+      <div class="title-en">
+        Tama Art University<br>
+        Department of Integrated Design<br>
+        Graduation Show 2026
+      </div>
+    </div>
+
+  <p class="gimmick-info">（つぶつぶをクリックしてみてください。）</p>
+  </div>
+
+</nav>
+
+<main class="sidebar-underrayer"></main>
+
+
+
+</div>
+
+
+
+
+
+<script src="common.js"></script>
+<script src="index.js"></script>
+
+
+</body>
+
+</html>

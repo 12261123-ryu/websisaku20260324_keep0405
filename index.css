@@ -1,0 +1,68 @@
+
+
+
+
+
+.filter-tags {
+  font-family: "游ゴシック";
+  font-size: 13px;
+  color: #8b8b8b;
+  display: flex;
+  flex-wrap: wrap;       /* 画面端で自動で次の行へ */
+  line-height: 2;      /* 行間を少し空けてタップしやすく */
+  word-break: break-all; /* 長い単語でも崩れないように */
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.filter-tags span {
+  cursor: pointer;
+  /* padding: 0 5px; ← JSのスペースだけでなくCSSでも微調整可能 */
+}
+.filter-tags span.active {
+  color: magenta;
+}
+
+
+
+.web-title{
+    margin-top: 120px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-left: 10px;
+    margin: 120px 20px 0px 15px;
+}
+.web-title .title{
+    font-family: "Times","游明朝体","Yu Mincho";
+    font-size: 19px;
+    color: #4b4b4b;
+}
+.web-title .professor-name{
+    font-family: "Times","游明朝体","Yu Mincho";
+    font-size: 15px;
+    color: #4b4b4b;
+    margin-top: 7px;
+
+}
+.web-title .titletext{
+    font-family: "Times","游明朝体","Yu Mincho";
+    font-size: 15px;
+    color: #4b4b4b;
+    margin: 20px 0 60px 0;
+}
+.web-title a.title {
+    color: #4b4b4b;
+    text-decoration: none;
+}
+
+
+/* ブロック3：作品一覧 */
+.work-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-family: "Yu Gothic","游ゴシック";
+}
+
+
+

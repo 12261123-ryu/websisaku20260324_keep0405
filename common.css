@@ -1,0 +1,300 @@
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 横方向のはみ出しを隠す */
+  /*position: fixed;*/    /* iPhoneでの「引っ張り更新」などの余計な動きを止める（任意） */
+  font-family: "Times","Yu Gothic","游ゴシック";
+}
+
+
+/* 画面全体の器 */
+.app-container {
+  display: flex;         /* 横並びにする */
+  width: 100vw;          /* 画面の横幅いっぱい */
+  height: 100vh;         /* 画面の縦幅いっぱい（ここが重要！） */
+  overflow: hidden;      /* 画面全体がガタガタ動くのを防ぐ */
+}
+
+/* 左側のメイン窓 */
+.main-window {
+  position: relative;
+  padding-top: 0;
+  margin-top: 0;
+  /*width: calc(100vw - 40px); /*サイドバーの幅を変えたらここも買えること*/
+  flex: 1; /* 残りの幅を全て使用する指示 */
+  height: 100%;          /* 親（container）と同じ高さにする */
+  overflow-y: auto;      /* 中身が溢れたら、この窓の中だけでスクロールさせる */
+  overflow-x: hidden;
+  z-index: 1;         /* サイドバーより低い数字 */
+  -webkit-overflow-scrolling: touch; /* iPhoneでヌルヌル動かすための設定 */
+  background-color: #fff;
+
+  /* --- スクロールバーを隠す設定 --- */
+  -ms-overflow-style: none;    /* IE, Edge用 */
+  scrollbar-width: none;       /* Firefox用 */
+}
+
+/* Chrome, Safari, iPhone用 */
+.main-window::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
+/* メインコンテンツ：バーの幅(40px)分だけ右を空ける */
+.sidebar-underrayer{
+  padding-right: 40px; 
+  box-sizing: border-box;
+}
+
+/* 右側のサイドバー */
+.side-bar {
+  width: 40px;
+  height: 100dvh;  /* safariでは下にあるUIで文字が隠れたりするので、動的ビューポートの高さ(dynamic viewport height)を指定 */
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 1px #add8e6; /* イラレの「線の位置：内側」と同じ挙動。4つ目の数値は線の広がりを指定 */
+  /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
+
+  cursor: pointer;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 700;
+  pointer-events: auto;
+
+  box-sizing: border-box; /* paddingを幅に含める */
+  padding: 20px;
+  /*transition: width 0.4s ease;*/
+}
+.side-bar.is-open {
+  width: 100vw;
+  box-shadow: inset 0 0 0 3px #add8e6;
+  padding-right: 40px; /* 右側のバーの幅分、内側に押し戻す */
+}
+
+/* 縦書きテキスト */
+.vertical-text {
+  writing-mode: vertical-rl;
+  color: #add8e6;
+  font-family: "Times","Yu Mincho","游明朝体";
+  white-space: nowrap;   /* 改行を防ぐ */
+
+  /* spanを「箱」として認識させ、中の文字を中央へ */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  line-height: 1.2em;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 1em;
+  margin: 0 0 0 0;
+}
+.fixed-labels{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column; /*中身を縦に並べる*/
+  justify-content: space-between; /*最初と最後を端っこに配置し、残りをその中央に配置=上中下に均等にばらけさせる*/
+  align-items: center; /*横方向(幅の中央)に揃える*/
+  box-sizing: border-box;
+  pointer-events: none; /* 下のメニューの邪魔をしない */
+  padding: 10px 0 calc(15px + env(safe-area-inset-bottom)) 0;
+}
+/* メニュー画面の時のみ、サイドバー横幅分を引くのではなく画面全体を用いて文字情報を配置 */
+/* flexboxは、どれかを基準にして他を順番に選ぶというときに使いやすい 
+　　menu-contentが上端からどのくらいとか、SNSリンクとタイトルの間の距離はこのくらいとか指定してないのに空いているとき、flexboxの自動計算で決まっている。
+　　align-itemsは左右、justfy-contentが上下*/
+.menu-content {
+  display: none;
+  flex-direction: column;
+  align-items: center;    /* 基本は全体を中央に寄せる */
+  justify-content: center;
+  
+  width: 100vw; /*画面全体を使用に変更*/ /*calc(100% - 40px); /* 右側の40px（バーの文字分）を除いたエリアで中央に */
+  height: 100vh;
+  pointer-events: auto;
+  font-family: "Times","Yu Gothic","游ゴシック";
+  box-sizing: border-box;
+  position: relative;
+  /*color: #0787ff; /* color: #4b4b4b; */
+}
+/* 開いた時だけ中身を出す */
+.side-bar.is-open .menu-content {
+  display: flex;
+  flex-direction: column;
+}
+#menu-icon-toggle{
+  color: #7f7f7f;
+  font-size: 25px;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 20;
+  /*padding: 1px 0 0 0;*/
+}
+/*
+.fixed-labels .bar-low{
+  padding: 0 0 10px 0;;
+}
+*/
+
+
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 塊の中では左揃え */
+  width: fit-content;      /* 中身の幅に合わせる */
+  margin-bottom: 50px;     /* 下の展示和英タイトルとの余白 */
+  line-height: 40px;
+}
+.menu-links a {
+  text-decoration: under-line;
+  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
+  font-size: 15px;
+  text-align: left;
+}
+.menu-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ブロックの中のみ左揃え */
+  width: fit-content;      /* 中身の幅に合わせる */
+  margin-bottom: 80px;
+}
+.sns-links {
+  display: flex;
+  font-family: "Times";
+  margin-top: 30px;
+  gap: 30px;
+  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
+}
+
+.exhibition-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
+}
+.title-jp{
+  text-align: left;       /* ブロック内は左揃え */
+  margin-right: 30px;     /* 和英タイトルの間の距離 */
+}
+.title-en {
+  text-align: left;
+}
+
+.gimmick-info {
+  position: absolute;
+  bottom: max(70px, env(safe-area-inset-bottom));  left: 50%;
+  transform: translateX(-50%);
+
+  text-align: center;
+  font-size: 12px;
+  color: #a4a4a4;
+  width: 100%;
+  white-space: nowrap;
+}
+
+
+
+
+/* iPhoneのタップハイライトを消す */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+
+
+
+/* 追加：各ブロック（タグ・題字・作品）を包む袋 */
+.content-wrapper {
+  display: flex;
+  flex-direction: column; /* 中身を縦に並べる */
+  align-items: flex-start; /* 中身を左寄せにする */
+  width: 100%;
+  padding: 0px 0px;     /* 上下px、左右pxの余白 */
+  box-sizing: border-box; /* パディングを幅に含める */
+}
+
+
+
+
+
+
+
+
+
+/* 作品一覧用 */
+
+/* 作品ひとつひとつの塊 */
+.work-item {
+  width: 100%;
+  margin-bottom: 20px; /* 作品同士の縦の間隔 */
+}
+
+/* サムネイル画像 */
+.work-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 画像の下に隙間ができないように */
+}
+
+/* 作品名と作者名のエリア */
+.work-info {
+  margin-top: 7px; /* 作品名と画像の間を詰めたい場合はここ */
+  display: flex;
+  gap: 20px; /* 作品名と作者名の間の隙間 */
+  font-size: 14px;
+  color: #333;
+  padding: 0 5px; /* 少しだけ内側に寄せる */
+  font-family: "游ゴシック","Yu Gothic";
+}
+
+/*.work-title {
+  font-weight: 500;
+}*/
+
+.work-designer {
+  color: #666; /* 作者名は少しだけ薄くすると読みやすい */
+}
+
+/* 画像が読み込まれるまでの背景（オプション） */
+.work-thumbnail {
+  background-color: #f9f9f9;
+}
+
+
+
+
+
+/* リンクの初期デザインを打ち消す */
+.work-item-link {
+  text-decoration: none; /* 下線を消す */
+  color: inherit;        /* 文字色を親要素(黒)から引き継ぐ */
+  display: block;        /* ブロック全体をクリック可能にする */
+  width: 100%;
+}
+
+/* iPhoneでタップした時に少し反応させる（任意） */
+.work-item-link:active {
+  opacity: 0.7;
+}
