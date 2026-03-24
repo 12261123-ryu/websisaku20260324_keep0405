@@ -293,7 +293,8 @@ align-itemsは左右、justfy-contentが上下*/
 
 /* 作品名と作者名のエリア */
 .work-info {
-  margin-top: 7px; /* 作品名と画像の間を詰めたい場合はここ */
+  margin-top: 7px; /* 作品名と画像の間の距離 */
+  margin-left: 4px;
   display: flex;
   gap: 20px; /* 作品名と作者名の間の隙間 */
   font-size: 14px;
@@ -302,9 +303,6 @@ align-itemsは左右、justfy-contentが上下*/
   font-family: "Yu Gothic","游ゴシック",sans-serif;
 }
 
-.work-designer {
-  color: #4a4a4a;
-}
 
 /* 画像が読み込まれるまでの背景（オプション） */
 .work-thumbnail {
