@@ -226,6 +226,7 @@ align-itemsは左右、justfy-contentが上下*/
   line-height: 1.5;
   white-space: nowrap;
   color: #4a4a4a; /* color: #4b4b4b;#0787ff; */
+  font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
 }
 .title-jp{
   text-align: left;       /* ブロック内は左揃え */
