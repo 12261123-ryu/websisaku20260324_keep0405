@@ -39,14 +39,16 @@ function renderWorkPage(work, knownMaterials = []) {
   document.getElementById('work-concept').innerText = work.concept;
 
   // --- 2. 所属（プロジェクト）の判定 ---
-  // シンプルに project 列が "M" なら大学院、それ以外はプロジェクト
+  // project 列が "M" なら大学院、それ以外はプロジェクト
   const projectElem = document.getElementById('work-project');
-  if (work.project === "M") {
-      const masterDetail = work.Master_project ? `（${work.Master_project}）` : "";
-      projectElem.innerText = `大学院${masterDetail}`;
-  } else {
-      projectElem.innerText = `${work.project}プロジェクト`;
-  }
+if (work.project === "M") {
+    const masterDetail = work.Master_project ? `（${work.Master_project}）` : "";
+    // リンク化：?filter=M を送る
+    projectElem.innerHTML = `<a href="index.html?filter=M" class="tag-link">#大学院${masterDetail}</a>`;
+} else {
+    // リンク化：プロジェクトの記号（A, Bなど）をfilterに送る
+    projectElem.innerHTML = `<a href="index.html?filter=${work.project}" class="tag-link">#${work.project}プロジェクト</a>`;
+}
   
   // --- 3. 素材表記のカスタマイズ ---
   const matElem = document.getElementById('work-materials');
@@ -58,16 +60,22 @@ function renderWorkPage(work, knownMaterials = []) {
       const trimmedM = m.trim();
       if (!trimmedM) return;
       if (knownMaterials.includes(trimmedM)) {
-        knowns.push(trimmedM);
-      } else {
-        others.push(trimmedM);
-      }
-    });
+      // 主要素材はリンク付きのHTML文字列として保存
+      knowns.push(`<a href="index.html?filter=${trimmedM}" class="tag-link">#${trimmedM}</a>`);
+    } else {
+      others.push(trimmedM);
+    }
+  });
 
     let displayParts = [];
     if (knowns.length > 0) displayParts.push(knowns.join('、'));
-    if (others.length > 0) displayParts.push(`その他（${others.join('、')}）`);
-    matElem.innerText = displayParts.join('、');
+    if (others.length > 0) {
+  // リンク先を index.html?filter=その他 に統一
+  // #その他 から後の（素材名）までを一つのリンク塊として見せる
+  displayParts.push(`<a href="index.html?filter=その他" class="tag-link">#その他（${others.join('、')}）</a>`);
+}
+
+    matElem.innerHTML = displayParts.join('、');
 
 
     // ---  Contact（連絡先）の追加 ---

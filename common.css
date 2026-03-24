@@ -46,11 +46,6 @@ html, body {
 
 
 
-/* メインコンテンツ：バーの幅(40px)分だけ右を空ける */
-.sidebar-underrayer{
-  padding-right: 40px; 
-  box-sizing: border-box;
-}
 
 /* 右側のサイドバー */
 /* 3/24を受けて、サイドバーについて、メニューを開いていない時はサイドバーのエリア越しに背後をスクロールできるようにする */
@@ -63,7 +58,6 @@ html, body {
   box-shadow: none;
   /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
 
-  cursor: pointer;
   position: fixed;
   display: flex;
   align-items: center;
@@ -74,7 +68,6 @@ html, body {
   touch-action: none; /* このエリアでのスクロールをブラウザに無視させる */
 
   box-sizing: border-box; /* paddingを幅に含める */
-  padding: 20px;
   /*transition: width 0.4s ease;*/
 }
 .side-bar.is-open {
@@ -107,7 +100,8 @@ html, body {
   margin: 0;
   padding: 0;
   width: 1em;
-  margin: 0 0 0 0;
+  margin: 0 0;
+  text-decoration: none;
 
   /* 閉じていても、文字やアイコンは触れるようにする */
   pointer-events: auto;
@@ -159,17 +153,35 @@ align-itemsは左右、justfy-contentが上下*/
 #menu-icon-toggle{
   color: #888;
   font-size: 25px;
-  pointer-events: auto;
-  cursor: pointer;
-  z-index: 20;
-  /*padding: 1px 0 0 0;*/
+  z-index: 900;
+  position: relative;
 
   /* 閉じていても、文字やアイコンは触れるようにする */
   pointer-events: auto;
   cursor: pointer;
   touch-action: auto;
-}
 
+  display: flex;           /* 中の ≡ や × を中央に寄せる */
+  align-items: center;     /* 垂直方向中央 */
+  justify-content: center; /* 水平方向中央 */
+
+  width: 40px;             /* バーの幅に合わせる */
+  height: 40px;            /* ≡,×ともに40pxの中に収める */
+  
+  font-size: 25px;         /* 記号の大きさ */
+  line-height: 1;          /* 行間の影響を排除 */
+}
+/* 下2つはサイドバー内の統合卒展26というトップへのリンクに関するもの */
+.link-to-top {
+  text-decoration: none;
+  color: #add8e6; /* 他の文字と色を合わせる */
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.link-to-top:hover {
+  opacity: 0.7;
+}
 
 
 

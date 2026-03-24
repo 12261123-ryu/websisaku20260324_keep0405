@@ -16,6 +16,8 @@ fetch('project.json')
     const filterSection = document.querySelector('.filter-tags');
     keywords.forEach(item => {
       const span = document.createElement('span');
+      //「その他」の時も dataset.id をセットし表示を整える
+      span.dataset.id = String(item.id);
       span.innerHTML = `#${item.display}&nbsp;&nbsp;`;
       span.style.cursor = "pointer";
       
@@ -25,27 +27,29 @@ fetch('project.json')
       const clickedId = String(item.id);
 
       if (activeTagId === clickedId) {
-      // 【解除ルート】同じIDならリセット
-      activeTagId = null;
-      document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
-      renderWorks("all");
-      } else {
-      // 【絞り込みルート】違うIDなら新しく保存
-      activeTagId = clickedId;
+          activeTagId = null;
+          document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
+          renderWorks("all");
+        } else {
+          activeTagId = clickedId;
+          document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
+          span.classList.add('active');
     
-      document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
-      span.classList.add('active');
-    
-      if (item.display === "その他") {
-        renderWorks("others", "その他", "", ""); 
-      } else {
-        renderWorks(item.id, item.display, item.description || "", item.professor || "");
-      }
-    }
-  });
+          // 【ポイント】「その他」をクリックした際、renderWorksへ送るキーワードを統一
+          if (item.id === "その他") {
+            renderWorks("others", "その他", "", ""); 
+          } else {
+            renderWorks(item.id, item.display, item.description || "", item.professor || "");
+          }
+        }
+      });
       filterSection.appendChild(span);
     });
+
+    //タグが作り終わった直後にURLチェックを実行
+    checkUrlParams();
   });
+
 
 // 2. 描画・絞り込み実行関数
 function renderWorks(searchKey, displayName = "", description = "", professor = "") {
@@ -94,17 +98,24 @@ else {
     return;
   }
 
+
   allWorks.forEach(work => {
     let isMatch = false;
     if (searchKey === "all") {
       isMatch = true;
-    } else if (searchKey === "others") {
-      isMatch = work.materials && work.materials.some(m => !knownMaterials.includes(m));
-    } else {
-      // 型を文字列に揃えて比較
-      isMatch = (String(work.project) === String(searchKey)) || 
-                (work.materials && work.materials.includes(searchKey));
-    }
+    } 
+    //個別ページからの "その他" または タグクリックの "others" 両方に対応
+  else if (searchKey === "others" || searchKey === "その他") {
+    // work.materials の中に、knownMaterials（主要素材リスト）に含まれないものが1つでもあるか
+    isMatch = work.materials && work.materials.some(m => {
+      const trimmedM = m.trim();
+      return trimmedM !== "" && !knownMaterials.includes(trimmedM);
+    });
+  } 
+  else {
+    isMatch = (String(work.project) === String(searchKey)) || 
+              (work.materials && work.materials.includes(searchKey));
+  }
     
     if (isMatch) {
       const thumbPath = `${work.main_image}`;
@@ -138,3 +149,57 @@ async function loadWorks() {
 }
 
 loadWorks();
+
+
+
+
+// --- 4. URLパラメータによる自動絞り込み ---
+function checkUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const filterId = params.get('filter');
+
+  if (filterId) {
+    // データの読み込み完了を待つ
+    const timer = setInterval(() => {
+      if (allWorks.length > 0 && knownMaterials.length > 0) {
+        clearInterval(timer);
+
+        fetch('project.json').then(res => res.json()).then(data => {
+          const keywords = data.filter_keywords;
+          let targetItem;
+
+          if (filterId === "others") {
+            targetItem = keywords.find(k => k.id === "その他");
+          } else {
+            // ID（A, B, 紙など）で検索
+            targetItem = keywords.find(k => String(k.id) === String(filterId));
+          }
+
+          if (targetItem) {
+            //ステート（現在のアクティブID）をURLから来たIDに更新
+            activeTagId = String(targetItem.id); 
+
+            // 絞り込み実行
+            renderWorks(targetItem.id, targetItem.display, targetItem.description || "", targetItem.professor || "");
+            
+            //タグの見た目を更新（埋め込んだdataset.idで正確に照合）
+            document.querySelectorAll('.filter-tags span').forEach(span => {
+              if (span.dataset.id === activeTagId) {
+                span.classList.add('active');
+              } else {
+                span.classList.remove('active');
+              }
+            });
+
+            // 絞り込み結果が見えるようにトップへスクロール
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      }
+    }, 100);
+  }
+}
+
+
+
+
