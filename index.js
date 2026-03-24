@@ -3,6 +3,7 @@
 // --- データの保持用 ---
 let allWorks = []; 
 let knownMaterials = []; 
+let activeTagId = null;   /* 洗濯中のタグIDを保存する */
 
 // 1. 絞り込みタグの生成
 fetch('project.json')
@@ -18,19 +19,30 @@ fetch('project.json')
       span.innerHTML = `#${item.display}&nbsp;&nbsp;`;
       span.style.cursor = "pointer";
       
+      // index.js の該当箇所を以下に差し替え
       span.addEventListener('click', () => {
-        // 見た目の切り替え
-        document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
-        span.classList.add('active');
-        
-        // ★ 修正ポイント：全ての情報を引数として渡す
-        if (item.display === "その他") {
-          renderWorks("others", "その他", "", ""); 
-        } else {
-          // ID, 表示名, 説明文, 教員名 の順番で渡す
-          renderWorks(item.id, item.display, item.description || "", item.professor || "");
-        }
-      });
+      // クリックされたIDを文字列に変換
+      const clickedId = String(item.id);
+
+      if (activeTagId === clickedId) {
+      // 【解除ルート】同じIDならリセット
+      activeTagId = null;
+      document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
+      renderWorks("all");
+      } else {
+      // 【絞り込みルート】違うIDなら新しく保存
+      activeTagId = clickedId;
+    
+      document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
+      span.classList.add('active');
+    
+      if (item.display === "その他") {
+        renderWorks("others", "その他", "", ""); 
+      } else {
+        renderWorks(item.id, item.display, item.description || "", item.professor || "");
+      }
+    }
+  });
       filterSection.appendChild(span);
     });
   });
