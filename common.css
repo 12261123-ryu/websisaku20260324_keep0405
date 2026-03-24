@@ -245,6 +245,7 @@ align-itemsは左右、justfy-contentが上下*/
   color: #888;
   width: 100%;
   white-space: nowrap;
+  font-family: "游明朝体","游明朝","Yu Mincho","YuMincho",serif;
 }
 
 
