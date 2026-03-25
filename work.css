@@ -31,7 +31,7 @@
     line-height: 1.8;
     /*font-size: 0.95rem;*/
     white-space: pre-wrap; /* 改行を反映させる */
-    max-width: 270px;     /* 箱組みのために横幅制限 */
+    max-width: 280px;     /* 箱組みのために横幅制限 */
 }
 .meta-info {
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
@@ -69,12 +69,15 @@
 .meta-content {
   flex-grow: 1;
   word-break: break-all; /* 長い単語でも枠内で改行させる */
+  white-space: pre-wrap; /* 改行を反映させる */
+  max-width: 220px;     /* 箱組みのために横幅制限 */
 }
 
 #work-contact a {
   color: inherit;
   text-decoration: underline;
 }
+
 
 /* 所属と素材名のハッシュタグのcss */
 .tag-link {
@@ -153,10 +156,32 @@
 .work-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* 一覧よりも狭めている。冗長にならない？ */
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
 }
 
+
+
+
+/* ブロック3：作品一覧 */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+/* レスポンシブ */
 
 
 

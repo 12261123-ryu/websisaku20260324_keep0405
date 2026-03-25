@@ -3,7 +3,7 @@
 // --- データの保持用 ---
 let allWorks = []; 
 let knownMaterials = []; 
-let activeTagId = null;   /* 洗濯中のタグIDを保存する */
+let activeTagId = null;   /* 選択中のタグIDを保存する */
 
 // 1. 絞り込みタグの生成
 fetch('project.json')
@@ -13,7 +13,9 @@ fetch('project.json')
     // 素材IDのリストを作成
     knownMaterials = keywords.map(item => item.id);
 
-    const filterSection = document.querySelector('.filter-tags');
+    const projectSection = document.getElementById('project-tags');
+    const materialSection = document.getElementById('material-tags');
+
     keywords.forEach(item => {
       const span = document.createElement('span');
       //「その他」の時も dataset.id をセットし表示を整える
@@ -21,12 +23,18 @@ fetch('project.json')
       span.innerHTML = `#${item.display}&nbsp;&nbsp;`;
       span.style.cursor = "pointer";
       
-      // index.js の該当箇所を以下に差し替え
-      span.addEventListener('click', () => {
-      // クリックされたIDを文字列に変換
-      const clickedId = String(item.id);
+      // --- JSONの "type" を見て振り分け先を決める ---
+      if (item.type === 'project') {
+        projectSection.appendChild(span);
+      } else {
+        // 素材(materials)や、typeが未定義のものはすべて2行目へ
+        materialSection.appendChild(span);
+      }
 
-      if (activeTagId === clickedId) {
+      // クリックイベント
+      span.addEventListener('click', () => {
+        const clickedId = String(item.id);
+        if (activeTagId === clickedId) {
           activeTagId = null;
           document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
           renderWorks("all");
@@ -34,8 +42,6 @@ fetch('project.json')
           activeTagId = clickedId;
           document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
           span.classList.add('active');
-    
-          // 【ポイント】「その他」をクリックした際、renderWorksへ送るキーワードを統一
           if (item.id === "その他") {
             renderWorks("others", "その他", "", ""); 
           } else {
@@ -43,7 +49,6 @@ fetch('project.json')
           }
         }
       });
-      filterSection.appendChild(span);
     });
 
     //タグが作り終わった直後にURLチェックを実行
@@ -55,7 +60,7 @@ fetch('project.json')
 function renderWorks(searchKey, displayName = "", description = "", professor = "") {
   const workList = document.getElementById('work-list');
   const titleElem = document.querySelector('.web-title .title');
-  const profElem = document.querySelector('.professor-name'); // HTMLにこのクラスがあるか確認
+  const profElem = document.querySelector('.professor-name');
   const descElem = document.querySelector('.web-title .titletext');
 
   if (!workList) return; // エラー防止

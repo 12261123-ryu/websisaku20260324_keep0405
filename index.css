@@ -11,7 +11,6 @@
   flex-wrap: wrap;       /* 画面端で自動で次の行へ */
   line-height: 2;      /* 行間を少し空けてタップしやすく */
   word-break: break-all; /* 長い単語でも崩れないように */
-  margin-top: 10px;
   margin-left: 10px;
 }
 
@@ -22,14 +21,14 @@
 .filter-tags span.active {
   color: magenta;
 }
+#project-tags{
+  margin-top: 15px;
+}
+
 
 
 
 .web-title{
-    margin-top: 120px;
-    margin-bottom: 0px;
-    margin-left: 10px;
-    margin-left: 10px;
     margin: 120px 20px 0px 15px;
 }
 .web-title .title{
@@ -59,13 +58,81 @@
 }
 
 
+
 /* ブロック3：作品一覧 */
 .work-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 30px;
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 
+
+
+
+
+
+
+/* レスポンシブ */
+
+/* 600px〜819px: 1列・左右に余白 */
+@media (min-width: 600px) {
+  .content-wrapper {
+    padding-left: 7%;
+    padding-right: calc(40px + 7%);
+  }
+  .filter-tags{
+    margin-left: 5px;
+  }
+  .web-title{
+    margin-left: 5px;
+  }
+
+}
+
+/* 820px〜1179px: 2列 */
+@media (min-width: 820px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .content-wrapper {
+    padding-left: 5%;
+    padding-right: calc(40px + 5%);
+  }
+
+  .filter-tags{
+    font-size: 15px;
+  }
+  .web-title .title{
+    font-size: 30px;
+  }
+.web-title .professor-name{
+    font-size: 20px;
+  }
+.web-title .titletext{
+    font-size: 17px;
+    max-width: 410px;     /* 箱組みのために横幅制限 */
+}
+}
+
+/* 1180px〜: 3列・最大幅制限 */
+@media (min-width: 1180px) {
+  .work-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  .content-wrapper {
+    max-width: 1500px; /* 最大幅 */
+    width: 100%;
+    padding-right: calc(40px + 5%); /* サイドバーの幅40px+余白 */
+    padding-left: 5%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+}
 

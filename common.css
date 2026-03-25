@@ -36,6 +36,10 @@ html, body {
   /* --- スクロールバーを隠す設定 --- */
   -ms-overflow-style: none;    /* IE, Edge用 */
   scrollbar-width: none;       /* Firefox用 */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Chrome, Safari, iPhone用 */
@@ -265,9 +269,9 @@ align-itemsは左右、justfy-contentが上下*/
 .content-wrapper {
   display: flex;
   flex-direction: column; /* 中身を縦に並べる */
-  align-items: flex-start; /* 中身を左寄せにする */
+  align-items: stretch;
   width: 100%;
-  padding-right: 40px;
+  padding-right: 40px; /* サイドバー分の余白をとり、作品表示部分がバーの下に行かないようにする */
   box-sizing: border-box; /* パディングを幅に含める */
 }
 
@@ -329,3 +333,5 @@ align-itemsは左右、justfy-contentが上下*/
 .work-item-link:active {
   opacity: 0.7;
 }
+
+
