@@ -74,9 +74,6 @@
 
 
 
-
-
-
 /* レスポンシブ */
 
 /* 600px〜819px: 1列・左右に余白 */
@@ -111,13 +108,13 @@
   .web-title .title{
     font-size: 30px;
   }
-.web-title .professor-name{
+  .web-title .professor-name{
     font-size: 20px;
   }
-.web-title .titletext{
+  .web-title .titletext{
     font-size: 17px;
     max-width: 410px;     /* 箱組みのために横幅制限 */
-}
+  }
 }
 
 /* 1180px〜: 3列・最大幅制限 */

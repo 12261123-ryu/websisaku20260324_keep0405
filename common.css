@@ -188,10 +188,30 @@ align-itemsは左右、justfy-contentが上下*/
   opacity: 0.7;
 }
 
+/* サイドバー下の卒展26のリンク当たり判定を広げる */
+.link-to-Top{
+  position: relative;
+}
+.link-to-Top::after{
+  content: "";
+  position:absolute;
+
+  /* 文字を中心に、上下左右に判定をどれくらい広げるか(透明なクッションをつける) */
+  top: -15px;    /* 上に20px広げる */
+  bottom: -15px; /* 下に15px広げる */
+  left: -10px;   /* 左に10px広げる（バーの外側へ） */
+  right: -10px;  /* 右に10px広げる（バーの内側へ） */
+  
+  /* このクッションも「リンクの一部」として指に反応させる */
+  pointer-events: auto;
+  cursor: pointer;
+  /*background-color: rgba(255, 0, 0, 0.3); z-index: -1; /* どこまでが当たり判定になっているか色付けて見れる */
+}
 
 
 
 .menu-links {
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* 塊の中では左揃え */
@@ -201,7 +221,7 @@ align-itemsは左右、justfy-contentが上下*/
   font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
 }
 .menu-links a {
-  text-decoration: under-line;
+  text-decoration: none;
   color: #4a4a4a;
   text-align: left;
 }
@@ -332,6 +352,44 @@ align-itemsは左右、justfy-contentが上下*/
 /* iPhoneでタップした時に少し反応させる（任意） */
 .work-item-link:active {
   opacity: 0.7;
+}
+
+
+
+
+
+
+/*レスポンシブ*/
+
+@media (min-width: 820px) {
+  .menu-links {
+    font-size: 20px;
+    margin-bottom: 60px;     /* 下の展示和英タイトルとの余白 */
+    line-height: 60px;
+  }
+  .sns-links {
+    font-size: 20px;
+    margin-top: 40px;
+  }
+  .exhibition-title, .gimmick-info {
+    font-size: 16px;
+  }
+  .title-jp{
+      margin-right: 40px;     /* 和英タイトルの間の距離 */
+  }
+}
+
+
+
+
+/*レスポンシブ*/
+
+/* 試しに広い画面の時のみサイドバーの当たり判定をバー全体にする(バー上ではスクロールできなくなる) */
+@media (min-width: 600px) {
+  .fixed-labels {
+    pointer-events: auto; /* 帯全体でクリックに反応するようにする */
+    cursor: pointer;      /* どこを触っても指マークが出るようにする */
+  }
 }
 
 

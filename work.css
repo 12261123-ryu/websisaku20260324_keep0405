@@ -1,5 +1,5 @@
 /* 画像は左右余白なし */
-.full-width-image img,
+.full-main-image img,
 .sub-image-item img {
   width: 100%;
   display: block;
@@ -132,14 +132,13 @@
   color: #4a4a4a;
 }
 .return-to-Top{
-  padding: 0 40px;
+  margin-left: 40px;
 }
 .return-to-Top a{
   color:#4a4a4a;
 }
 .recommend-list-title{
-  margin-bottom: 30px;
-  padding: 0 15px;
+  margin: 0 0 30px 20px;
   font-size: 20px;
 }
 
@@ -180,9 +179,128 @@
 
 
 
-
 /* レスポンシブ */
 
+/* --- モバイル（デフォルト：1カラム） --- */
+.work-page-grid {
+  display: grid;
+  grid-template-areas: 
+    "main-visual"
+    "info-block"
+    "sub-images";
+  gap: 20px; /* スマホ時の要素間の縦の隙間 */
+}
+/* HTMLのクラスに対して、Grid上の名前を割り当てる */
+#main-visual { grid-area: main-visual; }
+.work-info-block { grid-area: info-block; }
+.sub-image-list { grid-area: sub-images; }
 
 
+
+@media (min-width: 600px) {
+  .work-info-block {
+    margin-left: 5px;
+  }  
+}
+
+
+/* --- デスクトップ（2カラム） --- */
+@media (min-width: 820px) {
+    .content-wrapper {
+    padding-left: 5%;
+    padding-right: calc(40px + 5%);
+    max-width: 1500px;
+    margin: 0 auto;
+    }
+
+  .work-page-grid {
+    display: grid;
+    /* 左に文字(fr)、右に画像(fr)の比率でカラムを作成 */
+    grid-template-columns: 1fr 1.8fr;
+    /* 文字(info)を左側に固定し、右側にメインとサブを並べる */
+    grid-template-areas: 
+      "info-block main-visual"
+      "info-block sub-images";
+    
+    column-gap: 35px; /* 左右カラムの間の余白 */
+    row-gap: 20px;    /* メイン画像とサブ画像の間 */
+    align-items: flex-start; /* 中身を上揃えにする */
+    margin-top: 30px;
+    }
+  
+  /* 文字部分はスクロールに従って動くようにする */
+  .work-info-block {
+    grid-area: info-block;
+    position: sticky;
+    align-self: start; /* 個別に上端に配置 */
+    top: 130px; /* スクロールで上からどの部分で止まるか */
+    height: fit-content; /* 文字ブロック自身の高さで計算させる */
+  }
+
+  /* メイン画像：画像カラム内で横幅いっぱい */
+  .grid-main-image img {
+    width: 100%;
+    display: block;
+  }
+
+  #work-title{
+    font-size: 32px;
+    max-width: 370px;
+  }
+  #work-designer{
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  #work-concept{
+    font-size: 15px;
+    margin-top: 80px;
+    max-width: 370px;
+  }
+  .meta-info {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-top: 50px;
+  }
+  .meta-content {
+    max-width: 270px;     /* 素材名部分の箱組み */
+  }
+
+
+
+  .recommend-wrapper .work-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding-left: 10%;
+    padding-right: calc(40px + 10%);
+  }
+
+  .return-to-Top{
+    font-size: 18px;
+    margin-left: 15%;
+  }
+.recommend-list-title{
+    font-size: 25px;
+    margin-left: 12%;    
+  }
+
+
+
+}
+
+
+/* indexcssでの3列指定をworkhtmlでは上書きさせる */
+@media (min-width: 1180px) {
+  .work-page-grid {
+    column-gap: 60px; /* 左右カラムの間の余白 */
+  }
+
+  .recommend-wrapper .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 10%;
+    padding-right: calc(40px + 10%);
+    max-width: 1600px;
+  }
+  
+}
 
