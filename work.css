@@ -125,7 +125,18 @@
 
 
 
+.content-wrapper.work-part{
+  width: 100%;
+}
+.content-wrapper.recommend-part {
+  width: 100%;
+  box-sizing: border-box;
+}
 
+.work-grid.for-recommend{
+  width: 100%;
+  grid-template-columns: 1fr;
+}
 
 .return-to-Top, .recommend-list-title{
   font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic";
@@ -146,32 +157,11 @@
 /* レコメンドで、作者名の右にできるレコメンド理由 */
 /* レコメンド理由のエリア */
 .rec-reason{
-  margin-top: 4px;   /* 作者名との間隔 */
   font-size: 13px;   /* かなり小さめにして補足情報感を出す */
   color: #888;       /* 作者名(#666)よりさらに薄いグレー */
+  width: 100%; /* 1行を占有させる */
 }
 
-/* 作品ごとの間(一覧とは距離を変えている) */
-.work-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* 一覧よりも狭めている。冗長にならない？ */
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
-}
-
-
-
-
-/* ブロック3：作品一覧 */
-.work-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
-  width: 100%;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 
 
@@ -181,8 +171,10 @@
 
 /* レスポンシブ */
 
+/* グリッド自体のmarginなどを変えずに、content-wrapperでmarginなどを変更する */
+
 /* --- モバイル（デフォルト：1カラム） --- */
-.work-page-grid {
+.work-part-grid {
   display: grid;
   grid-template-areas: 
     "main-visual"
@@ -206,14 +198,14 @@
 
 /* --- デスクトップ（2カラム） --- */
 @media (min-width: 820px) {
-    .content-wrapper {
+  .content-wrapper.work-part {
     padding-left: 5%;
     padding-right: calc(40px + 5%);
     max-width: 1500px;
-    margin: 0 auto;
+    margin: 30px auto 0 auto;
     }
 
-  .work-page-grid {
+  .work-part-grid {
     display: grid;
     /* 左に文字(fr)、右に画像(fr)の比率でカラムを作成 */
     grid-template-columns: 1fr 1.8fr;
@@ -225,7 +217,6 @@
     column-gap: 35px; /* 左右カラムの間の余白 */
     row-gap: 20px;    /* メイン画像とサブ画像の間 */
     align-items: flex-start; /* 中身を上揃えにする */
-    margin-top: 30px;
     }
   
   /* 文字部分はスクロールに従って動くようにする */
@@ -233,7 +224,7 @@
     grid-area: info-block;
     position: sticky;
     align-self: start; /* 個別に上端に配置 */
-    top: 130px; /* スクロールで上からどの部分で止まるか */
+    top: 50px; /* スクロールで上からどの部分で止まるか */
     height: fit-content; /* 文字ブロック自身の高さで計算させる */
   }
 
@@ -249,17 +240,18 @@
   }
   #work-designer{
     font-size: 18px;
-    margin-top: 20px;
+    margin-top: 12px;
+    margin-bottom: 0;
   }
   #work-concept{
     font-size: 15px;
-    margin-top: 80px;
+    margin-top: 40px;
     max-width: 370px;
   }
   .meta-info {
     font-size: 15px;
     line-height: 1.8;
-    margin-top: 50px;
+    margin-top: 40px;
   }
   .meta-content {
     max-width: 270px;     /* 素材名部分の箱組み */
@@ -267,21 +259,23 @@
 
 
 
-  .recommend-wrapper .work-grid{
-    display: grid;
+  .content-wrapper.recommend-part{
+    padding-left: 10%;
+    padding-right: calc(10% + 40px);
+    margin: 0 auto;
+  }
+  .work-grid.for-recommend {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    padding-left: 10%;
-    padding-right: calc(40px + 10%);
+    width: 100%;
+    padding: 0;
   }
 
   .return-to-Top{
     font-size: 18px;
-    margin-left: 11%;
   }
-.recommend-list-title{
+  .recommend-list-title{
     font-size: 25px;
-    margin-left: 11%;    
   }
 
 
@@ -291,16 +285,14 @@
 
 /* indexcssでの3列指定をworkhtmlでは上書きさせる */
 @media (min-width: 1180px) {
-  .work-page-grid {
+  .work-part-grid {
     column-gap: 60px; /* 左右カラムの間の余白 */
   }
 
-  .recommend-wrapper .work-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .content-wrapper.recommend-part{
     padding-left: 10%;
     padding-right: calc(40px + 10%);
     max-width: 1600px;
   }
-  
 }
 

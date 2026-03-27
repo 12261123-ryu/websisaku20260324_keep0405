@@ -19,6 +19,9 @@ async function loadWorkDetail() {
     const work = works.find(item => item.en_name && item.en_name.trim() === targetName.trim());
 
     if (work) {
+      //タブ名の変更
+      document.title = `Prototype / ${work.title} / 統合デザイン学科卒業・修了制作展2026 / web図録`;
+
       renderWorkPage(work, knownMaterials);
       // 作品表示が終わった後、全作品データを使ってレコメンドを描画
       renderRecommendations(work, works, knownMaterials);
@@ -84,21 +87,27 @@ if (work.project === "M") {
 
     // データがあるかチェック (スプシで空欄なら項目ごと表示しない)
     if (work.contact && work.contact.type && work.contact.id) {
-    const type = work.contact.type;
+    const type = work.contact.type.toLowerCase().trim(); //スプシ上でインスタの先頭がIでもiでも正しく読み込むようにしている
     let id = work.contact.id.toString().trim();
     let linkUrl = "";
     let displayText = "";
 
     if (type === "instagram") {
-      const cleanId = id.replace('@', '');
-      linkUrl = `https://www.instagram.com/${cleanId}/`;
-      displayText = `@${cleanId}`;
-    } else if (type === "email") {
-      // @が含まれていなければ @gmail.com を足す
-      const fullEmail = id.includes('@') ? id : `${id}@gmail.com`;
-      linkUrl = `mailto:${fullEmail}`;
-      displayText = fullEmail;
-    }
+        const cleanId = id.replace('@', '');
+        linkUrl = `https://www.instagram.com/${cleanId}/`;
+        // 「Instagram @ID」の形式にする
+        displayText = `Instagram @${cleanId}`;
+      } else if (type === "x" || type === "twitter") {
+        const cleanId = id.replace('@', '');
+        linkUrl = `https://x.com/${cleanId}/`;
+        // 「X @ID」の形式にする
+        displayText = `X @${cleanId}`;
+      } else if (type === "email") {
+        //@がなければ@gmail.comを足す
+        const fullEmail = id.includes('@') ? id : `${id}@gmail.com`;
+        linkUrl = `mailto:${fullEmail}`;
+        displayText = fullEmail;
+      }
 
     if (linkUrl && contactArea) {
       contactArea.style.display = 'flex'; // データがある時だけ表示（レイアウトに合わせてblock等に変更可）
@@ -192,7 +201,7 @@ function renderRecommendations(currentWork, allWorks, knownMaterials) {
   if (sameProjectCandidates.length > 0) {
     const picked = sameProjectCandidates[Math.floor(Math.random() * sameProjectCandidates.length)];
     // ゼミ名のラベル設定
-    picked.recLabel = picked.project === "M" ? "（大学院）" : `（${picked.project}プロジェクト）`;
+    picked.recLabel = picked.project === "M" ? "(大学院)" : `(${picked.project}プロジェクト)`;
     recommended.push(picked);
     selectedNames.add(picked.en_name);
   }
@@ -214,7 +223,7 @@ function renderRecommendations(currentWork, allWorks, knownMaterials) {
       const picked = sameMatCandidates[Math.floor(Math.random() * sameMatCandidates.length)];
       // 素材ラベルの設定（主要素材ならその名前、その他なら「その他」）
       const matLabelName = isKnown ? myMat : "その他";
-      picked.recLabel = `（素材：${matLabelName}）`;
+      picked.recLabel = `(素材：${matLabelName})`;
       recommended.push(picked);
       selectedNames.add(picked.en_name);
     }
@@ -245,8 +254,9 @@ function renderRecommendations(currentWork, allWorks, knownMaterials) {
           <div class="work-info">
             <span class="work-title">${work.title}</span>
             <span class="work-designer">${work.name}</span>
+            ${labelHtml}
           </div>
-          ${labelHtml} </a>
+        </a>
       </div>`;
     container.insertAdjacentHTML('beforeend', html);
   });

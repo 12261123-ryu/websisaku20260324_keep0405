@@ -39,7 +39,7 @@ html, body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Chrome, Safari, iPhone用 */
@@ -138,17 +138,17 @@ align-itemsは左右、justfy-contentが上下*/
 .menu-content {
   width: 100vw; /*画面全体を使用に変更*/ /*calc(100% - 40px); /* 右側の40px（バーの文字分）を除いたエリアで中央に */
   height: 100dvh;
+  padding-top: 22dvh; /* 画面の一番上からどのくらい下げるか */
   
   display: none;
   flex-direction: column;
-  align-items: center;    /* 基本は全体を中央に寄せる */
-  justify-content: center;
+  align-items: center;    /* 横軸では中央揃え */
+  justify-content: flex-start; /* 縦軸では中央揃えにしない */
   
   pointer-events: auto;
   font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
   box-sizing: border-box;
   position: relative;
-  padding: 0 40px; /* 左右に40pxずつのマージンを設けて中央揃えを維持し、右端の固定テキストとの衝突を回避 */
 }
 /* 開いた時だけ中身を出す */
 .side-bar.is-open .menu-content {
@@ -216,21 +216,14 @@ align-itemsは左右、justfy-contentが上下*/
   flex-direction: column;
   align-items: flex-start; /* 塊の中では左揃え */
   width: fit-content;      /* 中身の幅に合わせる */
-  margin-bottom: 50px;     /* 下の展示和英タイトルとの余白 */
   line-height: 40px;
   font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
+  white-space: nowrap;
 }
 .menu-links a {
   text-decoration: none;
   color: #4a4a4a;
   text-align: left;
-}
-.menu-links-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* ブロックの中のみ左揃え */
-  width: fit-content;      /* 中身の幅に合わせる */
-  margin-bottom: 80px;
 }
 .sns-links {
   display: flex;
@@ -239,6 +232,14 @@ align-itemsは左右、justfy-contentが上下*/
   gap: 30px;
   color: #4a4a4a;
 }
+.menu-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ブロックの中のみ左揃え */
+  width: fit-content;      /* 中身の幅に合わせる */
+  margin: 0 auto 0 auto;  /* rightとleftでは左右中央に配置。bottomをタイトルとの距離を指定 */
+}
+
 
 .exhibition-title {
   display: flex;
@@ -248,6 +249,8 @@ align-itemsは左右、justfy-contentが上下*/
   width: 100%;
   font-size: 12px;
   line-height: 1.5;
+  margin-top: auto;
+  margin-bottom: 12dvh;
   white-space: nowrap;
   color: #4a4a4a; /* color: #4b4b4b;#0787ff; */
   font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
@@ -261,9 +264,8 @@ align-itemsは左右、justfy-contentが上下*/
 }
 
 .gimmick-info {
-  position: absolute;
-  bottom: max(70px, env(safe-area-inset-bottom));  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  margin-bottom: max(7dvh, env(safe-area-inset-bottom));
 
   text-align: center;
   font-size: 12px;
@@ -271,6 +273,7 @@ align-itemsは左右、justfy-contentが上下*/
   width: 100%;
   white-space: nowrap;
   font-family: "游明朝体","游明朝","Yu Mincho","YuMincho",serif;
+  pointer-events: none;
 }
 
 
@@ -285,7 +288,7 @@ align-itemsは左右、justfy-contentが上下*/
 
 
 
-/* 追加：各ブロック（タグ・題字・作品）を包む袋 */
+/* 各ブロック（タグ・題字・作品）を包む袋 */
 .content-wrapper {
   display: flex;
   flex-direction: column; /* 中身を縦に並べる */
@@ -293,6 +296,7 @@ align-itemsは左右、justfy-contentが上下*/
   width: 100%;
   padding-right: 40px; /* サイドバー分の余白をとり、作品表示部分がバーの下に行かないようにする */
   box-sizing: border-box; /* パディングを幅に含める */
+  position: relative;
 }
 
 
@@ -301,10 +305,15 @@ align-itemsは左右、justfy-contentが上下*/
 
 
 
-
+/* 作品一覧　トップの一覧と個別ページのレコメンドで共通使用 */
+.work-grid {
+  display: grid;
+  gap: 30px;
+  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  box-sizing: border-box;
+}
 
 /* 作品一覧用 */
-
 /* 作品ひとつひとつの塊 */
 .work-item {
   width: 100%;
@@ -321,7 +330,7 @@ align-itemsは左右、justfy-contentが上下*/
 
 /* 作品名と作者名のエリア */
 .work-info {
-  margin-top: 7px; /* 作品名と画像の間の距離 */
+  margin-top: 17px; /* 作品名と画像の間の距離 */
   margin-left: 4px;
   display: flex;
   gap: 20px; /* 作品名と作者名の間の隙間 */
@@ -329,6 +338,8 @@ align-itemsは左右、justfy-contentが上下*/
   color: #4a4a4a;
   padding: 0 5px; /* 少しだけ内側に寄せる */
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  flex-wrap: wrap;
+  line-height: 0.5;
 }
 
 
