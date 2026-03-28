@@ -85,11 +85,6 @@
   display: inline-block;
   transition: color 0.3s ease;
 }
-.tag-link:hover {
-  text-decoration: underline;
-  color: magenta;
-  transition: 0.3s ease;
-}
 
 
 
@@ -169,11 +164,37 @@
   width: 100%; /* 1行を占有させる */
   transition: 0.3s ease;
 }
+
+
+
+
+
+
+/* ホバー演出がタッチする機材で残ったりしないように調整 */
+/* PC用 */
+@media (hover: hover) {
+  .tag-link:hover {
+  text-decoration: underline;
+  color: magenta;
+  transition: 0.3s ease;
+}
 .work-item-link:hover .rec-reason{
   color: magenta;
   transition: 0.3s ease;
 }
-
+}
+/* スマホ用 */
+@media (hover: none) {
+.tag-link:active {
+  text-decoration: underline;
+  color: magenta;
+  transition: 0s ease;
+}
+.work-item-link:active .rec-reason{
+  color: magenta;
+  transition: 0s ease;
+}
+}
 
 
 

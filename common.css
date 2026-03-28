@@ -411,7 +411,7 @@ align-itemsは左右、justfy-contentが上下*/
 
 /* スマホなどタップ操作系での反応の試作(ホバーなどとケンカするなら消す。代わりに上のactiveを復活) */
 .work-item-link:active .work-thumbnail::after{
-  opacity: 1;
+  opacity: 0.5;
   transition: 0s;
 }
 .work-item-link:active .work-thumbnail img {
