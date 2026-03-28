@@ -177,6 +177,8 @@ align-itemsは左右、justfy-contentが上下*/
   font-size: 25px;         /* 記号の大きさ */
   line-height: 1;          /* 行間の影響を排除 */
 }
+
+
 /* 下2つはサイドバー内の統合卒展26というトップへのリンクに関するもの */
 .link-to-top {
   text-decoration: none;
@@ -226,11 +228,7 @@ align-itemsは左右、justfy-contentが上下*/
   color: #4a4a4a;
   text-align: left;
 }
-.menu-links a:hover{
-  color: magenta;
-  text-decoration: underline;
-  transition: 0.3s;
-}
+
 .sns-links {
   display: flex;
   font-family: "Times","Times New Roman";
@@ -403,6 +401,13 @@ align-itemsは左右、justfy-contentが上下*/
   filter: grayscale(100%);
   transition: filter 0.3s ease;
 }
+
+
+.menu-links a:hover{
+  color: magenta;
+  text-decoration: underline;
+  transition: 0.3s;
+}
 }
 /* スマホ用 */
 @media (hover: none) {
@@ -421,6 +426,12 @@ align-itemsは左右、justfy-contentが上下*/
 .work-item-link:active .work-info{
   color: magenta;
   transition: color 0s;
+}
+
+.menu-links a:active{
+  color: magenta;
+  text-decoration: underline;
+  transition: 0s;
 }
 }
 
