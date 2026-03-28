@@ -380,7 +380,7 @@ align-itemsは左右、justfy-contentが上下*/
   background-color: #00aeef; /* 色指定*/
   opacity: 0;             /* 初期状態は透明 */
   mix-blend-mode: screen; /* 画像と色を「スクリーン」でブレンド（白い部分が青く光る） */
-  transition: opacity 0.3s ease; /* 青くなるのをスムーズにする */
+  transition: opacity 0.6s ease; /* 青くなるのをスムーズにする */
   pointer-events: none;    /* クリックを画像本体に伝える */
 }
 
