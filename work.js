@@ -20,9 +20,14 @@ async function loadWorkDetail() {
 
     //戻るリンクを書き換える(絞り込み状態を保存する)
     if (work) {
-      document.title = `Prototype / ${work.title} / 統合デザイン学科卒業・修了制作展2026 / web図録`;
+      document.title = `${work.title} / 統合デザイン学科卒業・修了制作展2026 / web図録`;
       renderWorkPage(work, knownMaterials);
       renderRecommendations(work, works, knownMaterials);
+
+      //つぶつぶカラー変更用：作者の所属プロジェクトカラーへ
+      if (window.updateTubuColors) {
+        window.updateTubuColors(work.project);
+      }
 
       // 戻るリンクにfilterパラメータを付ける
       const lastFilter = sessionStorage.getItem('lastFilter');

@@ -445,9 +445,46 @@ align-itemsは左右、justfy-contentが上下*/
 
 
 
+footer{
+  padding: 0 30px 25px 30px;  
+  font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
+  color: #4a4a4a;
+}
+.footer-text{
+  display: flex;
+  font-size: 18px;
+  line-height: 1.5;
+  padding-bottom: 30px;
+}
+.footer-logos{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 15px;
+}
+.footer-logo{
+  height: auto;
+  max-height: 32px;
+  width: auto;
+}
+#copyright{
+  font-size: 12px;
+  line-height: 1.4;
+  padding-left: 0px;
+}
+
+
 
 
 /*レスポンシブ*/
+
+@media (min-width:600px)  {
+  footer {
+    padding: 0 10px 50px 10px;
+  }
+}
+
+
 
 @media (min-width: 820px) {
   .menu-links {
@@ -465,6 +502,7 @@ align-itemsは左右、justfy-contentが上下*/
   .title-jp{
       margin-right: 40px;     /* 和英タイトルの間の距離 */
   }
+  
 }
 
 

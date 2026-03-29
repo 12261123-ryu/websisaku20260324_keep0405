@@ -220,6 +220,13 @@
   .work-info-block {
     margin-left: 5px;
   }  
+
+  #work-concept{
+    max-width: 340px;
+  }
+  .meta-content {
+    max-width: 300px;
+  }
 }
 
 
@@ -281,7 +288,7 @@
     margin-top: 40px;
   }
   .meta-content {
-    max-width: 270px;     /* 素材名部分の箱組み */
+    max-width: 290px;     /* 素材名部分の箱組み */
   }
 
 

@@ -8,12 +8,44 @@
   const INITIAL_COUNT = 5;
   const MAX_COUNT = 30;
   const IMAGE_NAMES = [
-    "tubu1.webp",
-    "tubu2.webp",
-    "tubu3.webp",
-    "tubu4.webp",
-    "tubu5.webp",
+    "tubu1.webp", // pink
+    "tubu2.webp", // orange
+    "tubu3.webp", // vivid-blue
+    "tubu4.webp", // green
+    "tubu5.webp", // blue
   ];
+
+
+  //追加
+  // ゼミごとのつぶつぶカラーセット定義
+  const PROJECT_RECIPES = {
+    'A': ["tubu1.webp", "tubu1.webp", "tubu3.webp", "tubu3.webp", "tubu5.webp"],
+    'B': ["tubu1.webp", "tubu3.webp", "tubu3.webp", "tubu4.webp", "tubu4.webp"],
+    'C': ["tubu2.webp", "tubu3.webp", "tubu4.webp", "tubu4.webp", "tubu4.webp"],
+    'D': ["tubu1.webp", "tubu1.webp", "tubu1.webp", "tubu1.webp", "tubu4.webp"],
+    'F': ["tubu1.webp", "tubu1.webp", "tubu2.webp", "tubu5.webp", "tubu5.webp"],
+    'Y': ["tubu2.webp", "tubu2.webp", "tubu2.webp", "tubu4.webp", "tubu5.webp"],
+    'M': ["tubu1.webp", "tubu2.webp", "tubu3.webp", "tubu4.webp", "tubu5.webp"],
+    'all': ["tubu1.webp", "tubu2.webp", "tubu3.webp", "tubu4.webp", "tubu5.webp"]
+  };
+  // 外部（work.jsなど）から色を変えられるようにする関数
+  window.updateTubuColors = function(projectKey) {
+    const key = PROJECT_RECIPES[projectKey] ? projectKey : 'all';
+    const recipe = PROJECT_RECIPES[key];
+    
+    floaters.forEach((data, i) => {
+      const newImgName = recipe[i % recipe.length];
+      data.imgName = newImgName;
+      const imgEl = data.el.querySelector('img');
+      if (imgEl) {
+        imgEl.src = `images/tubu/${newImgName}`;
+      }
+    });
+  };
+
+
+
+
 
   /** @type {{el:HTMLDivElement,imgName:string,x:number,y:number,vx:number,vy:number,rot:number,shimmerTimer:number|null}[]} */
   const floaters = [];
@@ -207,8 +239,13 @@
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get('filter');
+    const recipeKey = PROJECT_RECIPES[filter] ? filter : 'all';
+    const recipe = PROJECT_RECIPES[recipeKey];
+
     for (let i = 0; i < INITIAL_COUNT; i += 1) {
-      const imgName = IMAGE_NAMES[i % IMAGE_NAMES.length];
+      const imgName = recipe[i % recipe.length]; // IMAGE_NAMESではなくレシピから選ぶ
       const x = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, width - IMG_SIZE * 3));
       const y = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, height - IMG_SIZE * 3));
       createFloater(imgName, x, y, false);
@@ -221,11 +258,17 @@
     syncInteractivity();
   }
 
+  // 追加：戻るボタンへの対応
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (window.updateTubuColors) window.updateTubuColors(params.get('filter'));
+  });
+
   function init() {
     createInitialFloaters();
     watchMenuState();
     document.addEventListener("pointerdown", handleDocumentPointerDown, {
-      passive: true,
+      passive: false, //元々trueだがメニュー画面でつぶタップすると警告が出るので、falseに変更中
     });
     requestAnimationFrame(tick);
   }

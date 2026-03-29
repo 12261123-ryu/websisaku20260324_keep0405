@@ -46,7 +46,13 @@ fetch('project.json')
           span.classList.add('active');
           sessionStorage.setItem('lastFilter', clickedId);
           history.replaceState(null, '', `index.html?filter=${clickedId}`); // URLを書き換え
-        if (item.id === "その他") {
+        
+          //つぶつぶカラー変更用：クリックしたプロジェクトカラーへ
+          if (window.updateTubuColors) {
+            window.updateTubuColors(clickedId);
+          }
+        
+          if (item.id === "その他") {
           renderWorks("others", "その他", "", ""); 
         } else {
           renderWorks(item.id, item.display, item.description || "", item.professor || "");
@@ -207,6 +213,12 @@ function checkUrlParams() {
             // 絞り込み実行
             renderWorks(targetItem.id, targetItem.display, targetItem.description || "", targetItem.professor || "");
             
+
+            //つぶつぶカラー変更用：URLで指定されたプロジェクトカラーに更新
+            if (window.updateTubuColors) {
+              window.updateTubuColors(targetItem.id);
+            }
+
             //タグの見た目を更新（埋め込んだdataset.idで正確に照合）
             document.querySelectorAll('.filter-tags span').forEach(span => {
               if (span.dataset.id === activeTagId) {
