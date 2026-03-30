@@ -72,7 +72,7 @@
     font-size: 13px;
     color: #4a4a4a;
     margin: 20px 0 60px 0;
-    max-width: 330px;     /* 箱組みのために横幅制限 */
+    max-width: 350px;     /* 箱組みのために横幅制限 */
     line-height: 1.8;
     text-align: justify;
     white-space: pre-wrap;
@@ -110,6 +110,10 @@
     padding: 0;
     margin-left: 4px;
   }
+  .web-title .titletext{
+    font-size: 14px;
+    max-width: 400px;     /* 箱組みのために横幅制限 */
+  }
 
 }
 
@@ -135,7 +139,7 @@
   }
   .web-title .titletext{
     font-size: 17px;
-    max-width: 460px;     /* 箱組みのために横幅制限 */
+    max-width: 480px;     /* 箱組みのために横幅制限 */
   }
 }
 
