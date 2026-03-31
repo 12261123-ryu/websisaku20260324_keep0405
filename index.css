@@ -3,6 +3,7 @@
 
 
 
+
 .filter-tags {
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
   font-size: 12px;
@@ -116,6 +117,9 @@
   #project-tags, #material-tags {
     display: flex;
     flex-wrap: wrap;
+  }
+  .filter-tags-wrapper{
+      margin-left: 0px;
   }
   .filter-tags{
     margin-left: 5px;
