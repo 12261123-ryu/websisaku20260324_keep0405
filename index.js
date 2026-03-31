@@ -5,6 +5,21 @@ let allWorks = [];
 let knownMaterials = []; 
 let activeTagId = null;   /* 選択中のタグIDを保存する */
 
+
+
+
+//all表示でのシャッフル用
+function shuffleArray(array) {
+  const clone = [...array]; 
+  for (let i = clone.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [clone[i], clone[j]] = [clone[j], clone[i]];
+  }
+  return clone;
+}
+
+
+
 // 1. 絞り込みタグの生成
 fetch('project.json')
   .then(response => response.json())
@@ -113,68 +128,72 @@ else {
     return;
   }
 
+  let displayWorks = [];
 
-  allWorks.forEach(work => {
-    let isMatch = false;
+
     if (searchKey === "all") {
-      isMatch = true;
-    } 
-    //個別ページからの "その他" または タグクリックの "others" 両方に対応
-  else if (searchKey === "others" || searchKey === "その他") {
-    // work.materials の中に、knownMaterials（主要素材リスト）に含まれないものが1つでもあるか
-    isMatch = work.materials && work.materials.some(m => {
-      const trimmedM = m.trim();
-      return trimmedM !== "" && !knownMaterials.includes(trimmedM);
-    });
+    // ALLの時はシャッフルしたコピーを作成
+    displayWorks = shuffleArray(allWorks);
   } 
   else {
-    isMatch = (String(work.project) === String(searchKey)) || 
-              (work.materials && work.materials.includes(searchKey));
+    // 絞り込み時は抽出してソート
+    displayWorks = allWorks.filter(work => {
+      if (searchKey === "others" || searchKey === "その他") {
+        return work.materials && work.materials.some(m => !knownMaterials.includes(m.trim()));
+      }
+      return (String(work.project) === String(searchKey)) || (work.materials && work.materials.includes(searchKey));
+    });
+
+    displayWorks.sort((a, b) => {
+      const nameA = a.hiragana_name || a.title || "";
+      const nameB = b.hiragana_name || b.title || "";
+      return nameA.localeCompare(nameB, 'ja');
+    });
   }
-    
-    if (isMatch) {
-      const thumbPath = `${work.main_image}`;
-      const workHTML = `
-        <a href="work.html?p=${work.en_name}" class="work-item-link">
-          <article class="work-item">
-            <div class="work-thumbnail">
-              <img src="${thumbPath}" alt="${work.title}" loading="lazy" decoding="async">
-            </div>
-            <div class="work-info">
-              <span class="work-title">${work.title}</span>
-              <span class="work-designer">${work.name}</span>
-            </div>
-          </article>
-        </a>
-      `;
-      workList.insertAdjacentHTML('beforeend', workHTML);
-    }
+
+    // --- 実際に描画する（displayWorksをループさせる） ---
+  displayWorks.forEach(work => {
+    const thumbPath = `${work.main_image}`;
+    const workHTML = `
+      <a href="work.html?p=${work.en_name}" class="work-item-link">
+        <article class="work-item">
+          <div class="work-thumbnail">
+            <img src="${thumbPath}" alt="${work.title}" loading="lazy" decoding="async">
+          </div>
+          <div class="work-info">
+            <span class="work-title">${work.title}</span>
+            <span class="work-designer">${work.name}</span>
+          </div>
+        </article>
+      </a>
+    `;
+    workList.insertAdjacentHTML('beforeend', workHTML);
   });
   
-  // 表示件数チェック（素材・プロジェクト絞り込み時のみ）
+  // 表示件数チェック
   if (searchKey !== 'all' && searchKey !== 'others') {
     const displayedCount = workList.querySelectorAll('.work-item-link').length;
-  if (displayedCount === 0) {
-    titleElem.innerText = `${displayName}を使用した作品はありません。`;
+    if (displayedCount === 0) {
+      titleElem.innerText = `${displayName}を使用した作品はありません。`;
+    }
   }
 }
   
-}
-
 
 // 3. データの初期読み込み。work.json読み込み失敗時のメッセージあり
 async function loadWorks() {
   try {
     const response = await fetch('work.json'); 
     allWorks = await response.json();
+
+    // 読み込み完了後にrenderWorks("all")を呼べば、自動的に中でシャッフルされる
     renderWorks("all");
     setTimeout(restoreScroll, 2000);
   } catch (error) {
     console.error('work.json の読み込みに失敗しました:', error);
-    // ユーザー向けエラー表示
     const workList = document.getElementById('work-list');
     if (workList) {
-      workList.innerHTML = '<p style="padding: 20px; color: #888;">作品データの読み込みに失敗しました。ページを再読み込みしてください。</p>';
+      workList.innerHTML = '<p style="padding: 20px; color: #888;">作品データの読み込みに失敗しました。</p>';
     }
   }
 }
