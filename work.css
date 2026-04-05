@@ -17,13 +17,13 @@
     color: #4a4a4a;
 }
 #work-designer{
-    font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+    font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
     font-size: 17px;
     color: #4a4a4a;
     margin: 10px 0 40px 0;
 }
 #work-concept{
-    font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+    font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
     color: #4a4a4a;
     font-size: 13px;
     margin-top: 0px;
@@ -33,7 +33,7 @@
     max-width: 280px;     /* 箱組みのために横幅制限 */
 }
 .meta-info {
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   display: flex;
   flex-direction: column; /* 項目を縦に並べる */
   margin: 20px 0 70px 0;
@@ -127,7 +127,7 @@
 }
 
 .recommend-list-title{
-  font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic";
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   color: #4a4a4a;
 }
 .return-to-Top{

@@ -5,7 +5,7 @@
 
 
 .filter-tags {
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   font-size: 12px;
   color: #888;
   display: flex;
@@ -69,7 +69,7 @@
 
 }
 .web-title .titletext{
-    font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+    font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
     font-size: 12px;
     color: #4a4a4a;
     margin: 20px 0 60px 0;

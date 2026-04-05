@@ -7,7 +7,7 @@ html, body {
   padding: 0;
   overflow-x: hidden; /* 横方向のはみ出しを隠す */
   /*position: fixed;*/    /* iPhoneでの「引っ張り更新」などの余計な動きを止める（任意） */
-  font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
 }
 
 
@@ -147,7 +147,7 @@ align-itemsは左右、justfy-contentが上下*/
   justify-content: flex-start; /* 縦軸では中央揃えにしない */
   
   pointer-events: auto;
-  font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   box-sizing: border-box;
   position: relative;
 }
@@ -312,7 +312,7 @@ align-itemsは左右、justfy-contentが上下*/
 .work-grid {
   display: grid;
   gap: 30px;
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   box-sizing: border-box;
 }
 
@@ -348,7 +348,7 @@ align-itemsは左右、justfy-contentが上下*/
   font-size: 14px;
   color: #4a4a4a;
   padding: 0 5px; /* 少しだけ内側に寄せる */
-  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
+  font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   flex-wrap: wrap;
   line-height: 1.5;
   transition: color 0.3s ease;
